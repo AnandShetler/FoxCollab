@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Features');
+        data.addColumn('number', 'Relative amount');
+        data.addRows([
+          ['BPM', 1],
+          ['Scale', 1],
+          ['Rhythmic-ness lmao', 1],
+          ['Mood', 1],
+          ['Key', 1]
+        ]);
+
+        var options = { 'title':'Live Feature Updates',
+                        'width':800,
+                        'height':600,
+                        'legend':'none'};
+
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+      var socket = new WebSocket();
+      socket.onmessage = function(e) {
+        console.log(e.data);
+        data = new google.visualization.DataTable(e.data[0]);
+        chart.draw(data);
+        let s = "<ul>";
+        for (var i in e.data[1]) {
+          s += "<li>"+i+"</li>"
+        }
+        s += "</ul>"
+        $("#other_features").html(s);
+      }
+    </script>
+    <title>MusicCollab</title>
+  </head>
+  <body>
+    <h1>MusicCollab</h1>
+    <div id="chart_div"></div>
+    <div id="other_features"></div>
+  </body>
+</html>
