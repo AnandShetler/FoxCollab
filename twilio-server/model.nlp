@@ -36,15 +36,15 @@
             "intent": "change.bpm.up",
             "domain": "default"
           },
-          "bpm,lower": {
-            "intent": "change.bpm.down",
-            "domain": "default"
-          },
           "faster": {
             "intent": "change.bpm.up",
             "domain": "default"
           },
-          "fast,too": {
+          "slow,too": {
+            "intent": "change.bpm.up",
+            "domain": "default"
+          },
+          "bpm,lower": {
             "intent": "change.bpm.down",
             "domain": "default"
           },
@@ -52,8 +52,8 @@
             "intent": "change.bpm.down",
             "domain": "default"
           },
-          "slow,too": {
-            "intent": "change.bpm.up",
+          "fast,too": {
+            "intent": "change.bpm.down",
             "domain": "default"
           }
         },
@@ -69,17 +69,17 @@
           },
           {
             "domain": "default",
-            "utterance": "lower bpm",
-            "intent": "change.bpm.down"
-          },
-          {
-            "domain": "default",
             "utterance": "faster",
             "intent": "change.bpm.up"
           },
           {
             "domain": "default",
-            "utterance": "too fast",
+            "utterance": "too slow",
+            "intent": "change.bpm.up"
+          },
+          {
+            "domain": "default",
+            "utterance": "lower bpm",
             "intent": "change.bpm.down"
           },
           {
@@ -89,8 +89,8 @@
           },
           {
             "domain": "default",
-            "utterance": "too slow",
-            "intent": "change.bpm.up"
+            "utterance": "too fast",
+            "intent": "change.bpm.down"
           }
         ],
         "domains": {
@@ -109,12 +109,12 @@
             "features": {
               "higher": 1,
               "bpm": 1,
-              "lower": 1,
               "faster": 1,
               "too": 1,
-              "fast": 1,
+              "slow": 1,
+              "lower": 1,
               "slower": 1,
-              "slow": 1
+              "fast": 1
             },
             "intents": {
               "change.bpm.up": 1,
@@ -131,9 +131,9 @@
               "change.bpm.down": [
                 "lower",
                 "bpm",
+                "slower",
                 "too",
-                "fast",
-                "slower"
+                "fast"
               ]
             },
             "featuresToIntent": {
@@ -157,10 +157,10 @@
               "lower": [
                 "change.bpm.down"
               ],
-              "fast": [
+              "slower": [
                 "change.bpm.down"
               ],
-              "slower": [
+              "fast": [
                 "change.bpm.down"
               ]
             },
@@ -168,12 +168,12 @@
               "features": [
                 "higher",
                 "bpm",
-                "lower",
                 "faster",
                 "too",
-                "fast",
-                "slower",
                 "slow",
+                "lower",
+                "slower",
+                "fast",
                 "nonefeature"
               ],
               "intents": [
@@ -183,40 +183,40 @@
               ],
               "perceptrons": [
                 [
-                  7.1552252769470215,
-                  1.9709781408309937,
-                  -5.18424654006958,
-                  9.093469619750977,
-                  1.974347472190857,
-                  -5.1996331214904785,
-                  -3.2282633781433105,
-                  7.173982620239258,
-                  -3.2334399223327637,
-                  3.2873835867761056
+                  7.186985492706299,
+                  1.9699339866638184,
+                  9.097346305847168,
+                  1.9684873819351196,
+                  7.154387474060059,
+                  -5.217049598693848,
+                  -3.2493908405303955,
+                  -5.185901641845703,
+                  -3.212852716445923,
+                  3.2831542652083
                 ],
                 [
-                  -5.178279399871826,
-                  1.979636788368225,
-                  7.157914161682129,
-                  -3.2194628715515137,
-                  1.9720207452774048,
-                  7.183178424835205,
-                  9.084299087524414,
-                  -5.211158275604248,
-                  -3.2363808155059814,
-                  3.2886693689996958
+                  -5.202469348907471,
+                  1.9798610210418701,
+                  -3.220853090286255,
+                  1.9779901504516602,
+                  -5.1691484451293945,
+                  7.1823320388793945,
+                  9.104912757873535,
+                  7.147137641906738,
+                  -3.257730722427368,
+                  3.2931782363483233
                 ],
                 [
-                  -0.6616976261138916,
-                  -1.318299651145935,
-                  -0.6566022038459778,
-                  -1.9159610271453857,
-                  -1.3142421245574951,
-                  -0.6674637794494629,
-                  -1.9022507667541504,
-                  -0.6467785239219666,
-                  10.394203186035156,
-                  1.9749652481896434
+                  -0.6773833632469177,
+                  -1.3221874237060547,
+                  -1.9169692993164062,
+                  -1.3152707815170288,
+                  -0.671244740486145,
+                  -0.6448047161102295,
+                  -1.9011528491973877,
+                  -0.6440263390541077,
+                  10.395516395568848,
+                  1.9733292884560483
                 ]
               ],
               "perceptronSettings": {
@@ -243,15 +243,15 @@
       ],
       [
         "en",
-        "lower bpm"
-      ],
-      [
-        "en",
         "faster"
       ],
       [
         "en",
-        "too fast"
+        "too slow"
+      ],
+      [
+        "en",
+        "lower bpm"
       ],
       [
         "en",
@@ -259,7 +259,7 @@
       ],
       [
         "en",
-        "too slow"
+        "too fast"
       ]
     ]
   },
