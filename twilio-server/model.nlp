@@ -32,30 +32,6 @@
           "useStemDict": true
         },
         "stemDict": {
-          "bass,more": {
-            "intent": "change.morebass",
-            "domain": "default"
-          },
-          "bass,less": {
-            "intent": "change.lessbass",
-            "domain": "default"
-          },
-          "louder": {
-            "intent": "change.louder",
-            "domain": "default"
-          },
-          "up,volum": {
-            "intent": "change.louder",
-            "domain": "default"
-          },
-          "quieter": {
-            "intent": "change.quieter",
-            "domain": "default"
-          },
-          "down,volum": {
-            "intent": "change.quieter",
-            "domain": "default"
-          },
           "bpm,higher": {
             "intent": "change.bpm.up",
             "domain": "default"
@@ -68,50 +44,24 @@
             "intent": "change.bpm.up",
             "domain": "default"
           },
+          "fast,too": {
+            "intent": "change.bpm.down",
+            "domain": "default"
+          },
           "slower": {
             "intent": "change.bpm.down",
+            "domain": "default"
+          },
+          "slow,too": {
+            "intent": "change.bpm.up",
             "domain": "default"
           }
         },
         "intentDict": {
-          "change.morebass": "default",
-          "change.lessbass": "default",
-          "change.louder": "default",
-          "change.quieter": "default",
           "change.bpm.up": "default",
           "change.bpm.down": "default"
         },
         "sentences": [
-          {
-            "domain": "default",
-            "utterance": "more bass",
-            "intent": "change.morebass"
-          },
-          {
-            "domain": "default",
-            "utterance": "less bass",
-            "intent": "change.lessbass"
-          },
-          {
-            "domain": "default",
-            "utterance": "louder",
-            "intent": "change.louder"
-          },
-          {
-            "domain": "default",
-            "utterance": "volume up",
-            "intent": "change.louder"
-          },
-          {
-            "domain": "default",
-            "utterance": "quieter",
-            "intent": "change.quieter"
-          },
-          {
-            "domain": "default",
-            "utterance": "volume down",
-            "intent": "change.quieter"
-          },
           {
             "domain": "default",
             "utterance": "higher bpm",
@@ -129,8 +79,18 @@
           },
           {
             "domain": "default",
+            "utterance": "too fast",
+            "intent": "change.bpm.down"
+          },
+          {
+            "domain": "default",
             "utterance": "slower",
             "intent": "change.bpm.down"
+          },
+          {
+            "domain": "default",
+            "utterance": "too slow",
+            "intent": "change.bpm.up"
           }
         ],
         "domains": {
@@ -147,85 +107,36 @@
               "log": true
             },
             "features": {
-              "more": 1,
-              "bass": 1,
-              "less": 1,
-              "louder": 1,
-              "volum": 1,
-              "up": 1,
-              "quieter": 1,
-              "down": 1,
               "higher": 1,
               "bpm": 1,
               "lower": 1,
               "faster": 1,
-              "slower": 1
+              "too": 1,
+              "fast": 1,
+              "slower": 1,
+              "slow": 1
             },
             "intents": {
-              "change.morebass": 1,
-              "change.lessbass": 1,
-              "change.louder": 1,
-              "change.quieter": 1,
               "change.bpm.up": 1,
               "change.bpm.down": 1
             },
             "intentFeatures": {
-              "change.morebass": [
-                "more",
-                "bass"
-              ],
-              "change.lessbass": [
-                "less",
-                "bass"
-              ],
-              "change.louder": [
-                "louder",
-                "volum",
-                "up"
-              ],
-              "change.quieter": [
-                "quieter",
-                "volum",
-                "down"
-              ],
               "change.bpm.up": [
                 "higher",
                 "bpm",
-                "faster"
+                "faster",
+                "too",
+                "slow"
               ],
               "change.bpm.down": [
                 "lower",
                 "bpm",
+                "too",
+                "fast",
                 "slower"
               ]
             },
             "featuresToIntent": {
-              "more": [
-                "change.morebass"
-              ],
-              "bass": [
-                "change.morebass",
-                "change.lessbass"
-              ],
-              "less": [
-                "change.lessbass"
-              ],
-              "louder": [
-                "change.louder"
-              ],
-              "volum": [
-                "change.louder",
-                "change.quieter"
-              ],
-              "up": [
-                "change.louder"
-              ],
-              "quieter": [
-                "change.quieter"
-              ],
-              "down": [
-                "change.quieter"
-              ],
               "higher": [
                 "change.bpm.up"
               ],
@@ -236,7 +147,17 @@
               "faster": [
                 "change.bpm.up"
               ],
+              "too": [
+                "change.bpm.up",
+                "change.bpm.down"
+              ],
+              "slow": [
+                "change.bpm.up"
+              ],
               "lower": [
+                "change.bpm.down"
+              ],
+              "fast": [
                 "change.bpm.down"
               ],
               "slower": [
@@ -245,149 +166,57 @@
             },
             "neuralNetwork": {
               "features": [
-                "more",
-                "bass",
-                "less",
-                "louder",
-                "volum",
-                "up",
-                "quieter",
-                "down",
                 "higher",
                 "bpm",
                 "lower",
                 "faster",
+                "too",
+                "fast",
                 "slower",
+                "slow",
                 "nonefeature"
               ],
               "intents": [
-                "change.morebass",
-                "change.lessbass",
-                "change.louder",
-                "change.quieter",
                 "change.bpm.up",
                 "change.bpm.down",
                 "None"
               ],
               "perceptrons": [
                 [
-                  8.067676544189453,
-                  3.8626861572265625,
-                  -4.204988479614258,
-                  -0.4513482451438904,
-                  -0.3791320323944092,
-                  -0.20515689253807068,
-                  -0.4469277262687683,
-                  -0.1739751249551773,
-                  -0.18876342475414276,
-                  -0.365065336227417,
-                  -0.17630192637443542,
-                  -0.44443410634994507,
-                  -0.4429047703742981,
-                  -0.44112589955329895,
-                  0.44546524209378185
+                  7.1552252769470215,
+                  1.9709781408309937,
+                  -5.18424654006958,
+                  9.093469619750977,
+                  1.974347472190857,
+                  -5.1996331214904785,
+                  -3.2282633781433105,
+                  7.173982620239258,
+                  -3.2334399223327637,
+                  3.2873835867761056
                 ],
                 [
-                  -4.186254501342773,
-                  3.8838796615600586,
-                  8.0701322555542,
-                  -0.4601369798183441,
-                  -0.40786680579185486,
-                  -0.22101472318172455,
-                  -0.4503919780254364,
-                  -0.1868520826101303,
-                  -0.20269696414470673,
-                  -0.3911803662776947,
-                  -0.1884833425283432,
-                  -0.44023221731185913,
-                  -0.4366106390953064,
-                  -0.4341631531715393,
-                  0.43270414730151435
+                  -5.178279399871826,
+                  1.979636788368225,
+                  7.157914161682129,
+                  -3.2194628715515137,
+                  1.9720207452774048,
+                  7.183178424835205,
+                  9.084299087524414,
+                  -5.211158275604248,
+                  -3.2363808155059814,
+                  3.2886693689996958
                 ],
                 [
-                  -0.6148797869682312,
-                  -1.225737452507019,
-                  -0.6108576655387878,
-                  10.446271896362305,
-                  2.9230270385742188,
-                  7.612318992614746,
-                  -1.8391889333724976,
-                  -4.689291954040527,
-                  -0.6232107877731323,
-                  -1.2388432025909424,
-                  -0.6156325340270996,
-                  -1.8027293682098389,
-                  -1.7912101745605469,
-                  -1.7779831886291504,
-                  1.843324126596923
-                ],
-                [
-                  -0.6172922849655151,
-                  -1.2310359477996826,
-                  -0.6137435436248779,
-                  -1.781104326248169,
-                  2.942378044128418,
-                  -4.654962539672852,
-                  10.461811065673828,
-                  7.597340106964111,
-                  -0.6428396701812744,
-                  -1.2649116516113281,
-                  -0.6220723390579224,
-                  -1.820347547531128,
-                  -1.8103772401809692,
-                  -1.7989345788955688,
-                  1.8470835356078439
-                ],
-                [
-                  -0.6216013431549072,
-                  -1.2363888025283813,
-                  -0.6147876381874084,
-                  -1.796478271484375,
-                  -1.2329068183898926,
-                  -0.6272755265235901,
-                  -1.7838176488876343,
-                  -0.6056315302848816,
-                  7.600487232208252,
-                  2.932687520980835,
-                  -4.667802333831787,
-                  10.455927848815918,
-                  -1.8225655555725098,
-                  -1.8123093843460083,
-                  1.8516027466223868
-                ],
-                [
-                  -0.6325269341468811,
-                  -1.2475154399871826,
-                  -0.6149886846542358,
-                  -1.8071305751800537,
-                  -1.2396210432052612,
-                  -0.6356029510498047,
-                  -1.795234203338623,
-                  -0.6040186882019043,
-                  -4.658496856689453,
-                  2.943551778793335,
-                  7.602046489715576,
-                  -1.7851104736328125,
-                  10.45336627960205,
-                  -1.8214612007141113,
-                  1.8522304362234345
-                ],
-                [
-                  -0.4720540940761566,
-                  -0.9356594681739807,
-                  -0.4636051058769226,
-                  -1.3494409322738647,
-                  -0.9302933216094971,
-                  -0.4758587181568146,
-                  -1.3388735055923462,
-                  -0.4544345736503601,
-                  -0.4637455344200134,
-                  -0.9242347478866577,
-                  -0.46048927307128906,
-                  -1.3232030868530273,
-                  -1.311586618423462,
-                  10.887202262878418,
-                  1.3921027609342445
+                  -0.6616976261138916,
+                  -1.318299651145935,
+                  -0.6566022038459778,
+                  -1.9159610271453857,
+                  -1.3142421245574951,
+                  -0.6674637794494629,
+                  -1.9022507667541504,
+                  -0.6467785239219666,
+                  10.394203186035156,
+                  1.9749652481896434
                 ]
               ],
               "perceptronSettings": {
@@ -410,30 +239,6 @@
     "extraSentences": [
       [
         "en",
-        "more bass"
-      ],
-      [
-        "en",
-        "less bass"
-      ],
-      [
-        "en",
-        "louder"
-      ],
-      [
-        "en",
-        "volume up"
-      ],
-      [
-        "en",
-        "quieter"
-      ],
-      [
-        "en",
-        "volume down"
-      ],
-      [
-        "en",
         "higher bpm"
       ],
       [
@@ -446,7 +251,15 @@
       ],
       [
         "en",
+        "too fast"
+      ],
+      [
+        "en",
         "slower"
+      ],
+      [
+        "en",
+        "too slow"
       ]
     ]
   },
