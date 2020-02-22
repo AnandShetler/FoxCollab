@@ -1,12 +1,12 @@
 const Table = require('cli-table')
-
+let transpose = (k, v) => {
+    let nm = {}
+    nm[k] = v
+    return nm
+}
 module.exports = {
-    transpose: (k, v) => {
-        let nm = {}
-        nm[k] = v
-        return nm
-    },
-    printInterface = state =>  {
+
+    printInterface: state =>  {
         process.stdout.write('\033c')
          console.log("––––– Live Interface –––––")
          const table = new Table()
@@ -16,8 +16,8 @@ module.exports = {
      setupApp: () => {
         const express = require('express')
         const bodyParser = require('body-parser')
-        const app = express()
-        app.use(bodyParser.urlencoded({extended: false}))
+        const app = express();
+        app.use(bodyParser.urlencoded({extended: false}));
         return app
      }
 }

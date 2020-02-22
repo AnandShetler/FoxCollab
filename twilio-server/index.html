@@ -3,6 +3,7 @@
     <link rel="stylesheet" type="text/css" href="main.css">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
+      window.state = {}
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
 
@@ -10,12 +11,12 @@
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Features');
         data.addColumn('number', 'Relative amount');
+        let x = []
+        for(let x2 in window.state)
+        if(typeof state[x2]  == 'number')
+          x.push([x2, state[x2]])
         data.addRows([
-          ['BPM', 1],
-          ['Scale', 1],
-          ['Rhythmic-ness lmao', 1],
-          ['Mood', 1],
-          ['Key', 1]
+          ...x
         ]);
 
         var options = { 'title':'Live Feature Updates',
@@ -46,4 +47,13 @@
     <div id="chart_div"></div>
     <div id="other_features"></div>
   </body>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    socket = io.connect(`${window.location.origin}/`)
+    socket.on('pushstate', (a) => {
+      for(let x in a)
+        state[x] = a[x]
+        drawChart()
+    })
+  </script>
 </html>
