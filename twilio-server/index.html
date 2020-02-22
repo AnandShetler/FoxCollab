@@ -1,59 +1,97 @@
 <html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="main.css">
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      window.state = {}
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
 
-      function drawChart() {
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Features');
-        data.addColumn('number', 'Relative amount');
-        let x = []
-        for(let x2 in window.state)
-        if(typeof state[x2]  == 'number')
+<head>
+  <style>
+    /* .view {
+      display: flex;
+      flex-direction: row;
+    } */
+    .view {
+      margin: auto;
+    }
+    #chart_div {
+      filter: invert(100);
+    }
+  </style>
+  <style id="starStyles">#stars {animation: animStar 100s linear infinite;}</style>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <link rel="stylesheet" href="parallax.css">
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'> -->
+
+  <script type="text/javascript">
+    window.state = {}
+    google.charts.load('current', {
+      'packages': ['corechart']
+    });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Features');
+      data.addColumn('number', 'Relative amount');
+      let x = []
+      for (let x2 in window.state)
+        if (typeof state[x2] == 'number')
           x.push([x2, state[x2]])
-        data.addRows([
-          ...x
-        ]);
+      data.addRows([
+        ...x
+      ]);
 
-        var options = { 'title':'Live Feature Updates',
-                        'width':800,
-                        'height':600,
-                        'legend':'none'};
+      var options = {
+        'title': 'Live Feature Updates',
+        'width': 800,
+        'height': 600,
+        'is3D': true,
+        'legend': 'left',
+        backgroundColor: { fill:'transparent' }
+      };
 
-        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
+      var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+    var socket = new WebSocket();
+    socket.onmessage = function (e) {
+      console.log(e.data);
+      data = new google.visualization.DataTable(e.data[0]);
+      chart.draw(data);
+      let s = "<ul>";
+      for (var i in e.data[1]) {
+        s += "<li>" + i + "</li>"
       }
-      var socket = new WebSocket();
-      socket.onmessage = function(e) {
-        console.log(e.data);
-        data = new google.visualization.DataTable(e.data[0]);
-        chart.draw(data);
-        let s = "<ul>";
-        for (var i in e.data[1]) {
-          s += "<li>"+i+"</li>"
-        }
-        s += "</ul>"
-        $("#other_features").html(s);
-      }
-    </script>
-    <title>MusicCollab</title>
-  </head>
-  <body>
-    <h1>MusicCollab</h1>
-    <div id="chart_div"></div>
-    <div id="other_features"></div>
-  </body>
-  <script src="/socket.io/socket.io.js"></script>
-  <script>
-    socket = io.connect(`${window.location.origin}/`)
-    socket.on('pushstate', (a) => {
-      for(let x in a)
-        state[x] = a[x]
-        drawChart()
-    })
+      s += "</ul>"
+      $("#other_features").html(s);
+    }
+    window.changeStarSpeed = (speed=100) => {
+      document.getElementById('starStyles').innerHTML = `#stars {animation: animStar ${speed}s linear infinite;}`
+    }
   </script>
+  <title>MusicCollab</title>
+</head>
+
+<body>
+  <!-- <h1>MusicCollab</h1> -->
+  <div id='stars' data-speed="100s"></div>
+  <div id='stars2'></div>
+  <div id='stars3'></div>
+  <div id='title'>
+    <!-- <div class="view">
+      <div id="chart_div"></div>
+      <!-- <div id="other_features">Speakers Connected: 0</div> -->
+    <!-- </div> -->
+    <div id="chart_div"></div>
+  </div>
+
+
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  socket = io.connect(`${window.location.origin}/`)
+  socket.on('pushstate', (a) => {
+    for (let x in a)
+      state[x] = a[x]
+    drawChart()
+    window.changeStarSpeed(window.state.bpm/2 || 100)
+  })
+</script>
+
 </html>

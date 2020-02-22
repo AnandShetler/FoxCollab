@@ -42,6 +42,7 @@ for(let r in reducers)
 
 app.get('/', (req, res) => res.send(`<a href="sms:${NUMBER}">Text number</a>`))
 app.get('/interface', (req, res) => res.sendFile(__dirname + '/index.html'))
+app.get('/parallax.css', (req, res) => res.sendFile(__dirname + '/parallax.css'))
 
 app.post("/message", async function (request, response) {
     let d = (await manager.process('en', request.body.Body)).classifications.filter(a=>a.score > 0.02 ).map(a=>a.intent)
