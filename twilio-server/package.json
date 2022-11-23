@@ -14,6 +14,6 @@
     "cli-table": "^0.3.1",
     "node-nlp": "^4.1.4",
     "node-spotify-api": "^1.1.1",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.5.0"
   }
 }
